@@ -8,6 +8,7 @@ import '/meal_card_widget.dart';
 import '/meal_card_loading_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:image_picker/image_picker.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/services.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'image_io.dart';
 import 'dashboard_model.dart';
 export 'dashboard_model.dart';
 
@@ -27,7 +29,6 @@ class DashboardWidget extends StatefulWidget {
 
 class _DashboardWidgetState extends State<DashboardWidget> {
   late DashboardModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -55,6 +56,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -100,8 +102,9 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                       Align(
                         alignment: AlignmentDirectional(-0.08, -0.56),
                         child: FFButtonWidget(
-                          onPressed: () {
+                          onPressed: () async {
                             print('Button pressed ...');
+                            getImage();
                           },
                           text: '',
                           options: FFButtonOptions(
@@ -177,7 +180,13 @@ class _DashboardWidgetState extends State<DashboardWidget> {
       ),
     );
   }
-
+  Future getImage() async {
+      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    
+      // setState(() {
+      //   _image = image;
+      // });
+  }
   Widget menu() {
     return Container(
       color:Color.fromARGB(153, 194, 255, 154),
