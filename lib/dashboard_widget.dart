@@ -1,48 +1,67 @@
-// import '/auth/firebase_auth/auth_util.dart';
-// import '/backend/backend.dart';
-import 'package:plantmed/profile_widget.dart';
-import 'package:plantmed/sign_in_widget.dart';
+import 'dart:io';
 
-import '/empty_state_widget.dart';
-import '/meal_card_widget.dart';
-import '/meal_card_loading_widget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:plantmed/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:image_picker/image_picker.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:flutter/services.dart';
-// import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
-import 'image_io.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'dashboard_model.dart';
+import 'gallery.dart';
 export 'dashboard_model.dart';
 
 class DashboardWidget extends StatefulWidget {
-  const DashboardWidget({super.key});
 
+  const DashboardWidget({Key? key}) : super(key: key);
   @override
   State<DashboardWidget> createState() => _DashboardWidgetState();
 }
 
 class _DashboardWidgetState extends State<DashboardWidget> {
   late DashboardModel _model;
+  late File _imageFile;
+  var object_name;
+
+  // Store the image as bytes
+
+//Camera code
+  Future<void> _pickImageFromCamera() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.camera);
+    if (pickedImage == null) return ; // User canceled the operation
+
+    setState(() {
+      _imageFile = File(pickedImage.path); // Update the image file
+    });
+
+    // Read the image file as bytes
+    final Uint8List? bytes = await _imageFile.readAsBytes();
+    if (bytes == null) return;
+
+    object_name = await get_image_class(_imageFile);
+    print("Object name from camera = ${object_name}");
+    // Save the image to the gallery
+    // final result = await ImageGallerySaver.saveImage(bytes);
+    // if (result['isSuccess']) {
+    //   print('Image saved to gallery successfully');
+    // } else {
+    //   print('Failed to save image to gallery');
+    // }
+  }
+
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DashboardModel());
 
-    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'Dashboard'});
-    // // On page load action.
-    // SchedulerBinding.instance.addPostFrameCallback((_) async {
-    //   logFirebaseEvent('DASHBOARD_PAGE_Dashboard_ON_INIT_STATE');
-    //   logFirebaseEvent('Dashboard_haptic_feedback');
-    //   HapticFeedback.mediumImpact();
-    // });
+    _imageFile = File('') ;
+    _model = createModel(context, () => DashboardModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -50,164 +69,407 @@ class _DashboardWidgetState extends State<DashboardWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           toolbarHeight: 80,
-          backgroundColor:Color.fromRGBO(0, 100, 0, 1.0),
+          backgroundColor: Color.fromRGBO(0, 100, 0, 1.0),
           shape: ContinuousRectangleBorder(
             borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30), // Adjust the radius value for the curve
+              bottom:
+              Radius.circular(30), // Adjust the radius value for the curve
             ),
           ),
-
-          title:const Text("PlantMed",style:TextStyle(fontFamily: 'Montserrat',color: Colors.white,fontWeight:FontWeight.bold),),
-          actions: [
-            IconButton(
-              onPressed: () {
-                // Add your button's onPressed logic here
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInWidget()));
-              },
-              icon: const Icon(Icons.logout_rounded, color: Colors.white,size: 40,),
-            ),
-          ],
+          title: const Text(
+            "PlantMed",
+            style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
+          ),
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(
+          //       Icons.search_rounded,
+          //       size: 30,
+          //       color: Colors.white,
+          //     ),
+          //     onPressed: () {
+          //       // Handle search action
+          //     },
+          //   ),
+          // ],
         ),
-
         bottomNavigationBar: menu(),
-        body: TabBarView(
-                children: [
-                  Container(child: // Generated code for this Stack Widget...
-                  Stack(
-                    children: [
-                      // Align(
-                      //   alignment: AlignmentDirectional(0, 0),
-                      //   child: ClipRRect(
-                      //     borderRadius: BorderRadius.circular(8),
-                      //     child: Image.network(
-                      //       '',
-                      //       width: 412,
-                      //       height: 289,
-                      //       fit: BoxFit.cover,
-                      //     ),
-                      //   ),
-                      // ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.08, -0.56),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            print('Button pressed ...');
-                            getImage();
-                          },
-                          text: '',
-                          options: FFButtonOptions(
-                            width: 200,
-                            height: 100,
-                            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            color:Color.fromRGBO(0, 100, 0, 1.0),
-                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                              fontFamily: 'Poppins',
-                              color: Colors.white,
-                              letterSpacing: 0,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    Container(
+                        child: // Generated code for this Stack Widget...
+                        Stack(
+                          children: [
+                            TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Search',
+                                prefixIcon: Icon(Icons.search),
+                              ),
                             ),
-                            elevation: 3,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
+                            // Image widget commented out for now
+                            Align(
+                              alignment: AlignmentDirectional(0, -0.55),
+                              child: Container(
+                                width: double.infinity,
+                                height: 180,
+                                child: CarouselSlider(
+                                  items: [
+
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/Sliding img1.jpg',
+                                        width: 300,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/sliding2.jpg',
+                                        width: 300,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/sliding3.jpg',
+                                        width: 300,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.asset(
+                                        'assets/images/sliding4.webp',
+                                        width: 300,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                  carouselController:
+                                  _model.carouselController ??=
+                                      CarouselController(),
+                                  options: CarouselOptions(
+                                    initialPage: 1,
+                                    viewportFraction: 0.5,
+                                    disableCenter: true,
+                                    enlargeCenterPage: true,
+                                    enlargeFactor: 0.25,
+                                    enableInfiniteScroll: true,
+                                    scrollDirection: Axis.horizontal,
+                                    autoPlay: true,
+                                    onPageChanged: (index, _) =>
+                                    _model.carouselCurrentIndex = index,
+                                  ),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.03, 0.14),
-                        child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
-                          text: '',
-                          options: FFButtonOptions(
-                            width: 200,
-                            height: 100,
-                            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            color: Color.fromRGBO(0, 100, 0, 1.0),
-                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                              fontFamily: 'Poppins',
-                              color: Colors.white,
-                              letterSpacing: 0,
+                            Align(
+                              alignment: Alignment(0.93, 0.46),
+                              child: Container(
+                                width: 150,
+                                height: 100,
+                                child: FFButtonWidget(
+                                  onPressed: () {
+                                    print('Button pressed ...');
+                                  },
+                                  text: '',
+                                  options: FFButtonOptions(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 24),
+                                    color: Color.fromRGBO(0, 100, 0, 1.0),
+                                    textStyle: FlutterFlowTheme
+                                        .of(context)
+                                        .titleSmall
+                                        .override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                                    elevation: 3,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
                             ),
-                            elevation: 3,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
+                            Align(
+                              alignment: Alignment(-0.93, 0.46),
+                              child: Container(
+                                width: 150,
+                                height: 100,
+                                child: FFButtonWidget(
+                                  onPressed: () {
+                                    print('Button pressed ...');
+                                  },
+                                  text: '',
+                                  options: FFButtonOptions(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 24),
+                                    color: Color.fromRGBO(0, 100, 0, 1.0),
+                                    textStyle: FlutterFlowTheme
+                                        .of(context)
+                                        .titleMedium
+                                        .override(
+                                      fontFamily: 'Playfair Display',
+                                    ),
+                                    elevation: 3,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.05, -0.53),
-                        child: Icon(
-                          Icons.image_search_sharp,
-                          color: Colors.white70,
-                          size: 60,
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.05, 0.13),
-                        child: Icon(
-                          Icons.camera_sharp,
-                          color: Colors.white70,
-                          size: 60,
-                        ),
-                      ),
-                    ],
-                  )
-                  ),
-                  Container(child: Icon(Icons.directions_transit)),
-                  Container(child: Icon(Icons.directions_bike)),
-                ],
+                            Align(
+                              alignment: Alignment(0.65, 0.4),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => gallery()),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.image_search_sharp,
+                                  color: Colors.white54,
+                                  size: 60,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment(-0.69, 0.41),
+                              child: InkWell(
+                                onTap: () async {
+                                  await _pickImageFromCamera();
+                                },
+                                child: Icon(
+                                  Icons.camera_sharp,
+                                  color: Colors.white54,
+                                  size: 60,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment(-0.71, 0.52),
+                              child: Text(
+                                'Camera',
+                                style: FlutterFlowTheme
+                                    .of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 15,
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment(0.65, 0.52),
+                              child: Text(
+                                'Gallery',
+                                style: FlutterFlowTheme
+                                    .of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 15,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        )
+                    ),
+                    Container(
+                        child:
+                        Stack(
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(-0.65, 0.52),
+                              child: Text(
+                                'Camera',
+                                style: FlutterFlowTheme
+                                    .of(context)
+                                    .titleMedium
+                                    .override(
+                                  fontFamily: 'Montserrat',
+                                  letterSpacing: 0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.72, 0.48),
+                              child: Text(
+                                'Gallery',
+                                style: FlutterFlowTheme
+                                    .of(context)
+                                    .titleMedium
+                                    .override(
+                                  fontFamily: 'Montserrat',
+                                  letterSpacing: 0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(-0.42, -0.88),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: SvgPicture.asset(
+                                  'assets/images/about-us.svg',
+                                  width: 300,
+                                  height: 215,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.02, 0.70),
+                              child: Container(
+                                width: 350,
+                                height: 204,
+                                decoration: BoxDecoration(
+                                  color: Colors.white38,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(5),
+                                    bottomRight: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
+                                  ),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Text(
+                                      'This app uses image processing techniques to identify Medicinal Herbs from images captured by the camera or uploaded image from gallery.Join us on a journey to unlock nature\'s healing power. Explore, discover, and harness the magic of medicinal plants with us today!',
+                                      textAlign: TextAlign.justify,
+                                      style: FlutterFlowTheme
+                                          .of(context)
+                                          .bodyMedium
+                                          .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Colors.black45,
+                                        fontSize: 14,
+                                        letterSpacing: 0,
+                                      ),
+                                    ),
+                                    // const Align(
+                                    //   alignment: AlignmentDirectional(-0.85, 0.81),
+                                    //   child: Icon(
+                                    //     Icons.facebook_sharp,
+                                    //     color: Colors.green,
+                                    //     size: 24,
+                                    //   ),
+                                    // ),
+                                    // const Align(
+                                    //   alignment: AlignmentDirectional(-0.04, 0.81),
+                                    //   child: Icon(
+                                    //     Icons.phone_outlined,
+                                    //     color: Colors.green,
+                                    //     size: 24,
+                                    //   ),
+                                    // ),
+                                    // const Align(
+                                    //   alignment: AlignmentDirectional(0.86, 0.8),
+                                    //   child: Icon(
+                                    //     Icons.email,
+                                    //     color: Colors.green,
+                                    //     size: 24,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(-0.13, -0.04),
+                              child: RichText(
+                                textScaler: MediaQuery
+                                    .of(context)
+                                    .textScaler,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: 'About us ',
+                                      style: FlutterFlowTheme
+                                          .of(context)
+                                          .bodyMedium
+                                          .override(
+                                        fontFamily: 'Montserrat',
+                                        color: Color.fromRGBO(0, 100, 0, 1.0),
+                                        fontSize: 28,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ' -Medicinal plant detection',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                      ),
+                                    )
+                                  ],
+                                  style: FlutterFlowTheme
+                                      .of(context)
+                                      .bodyMedium
+                                      .override(
+                                    fontFamily: 'Montserrat',
+                                    letterSpacing: 0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                    ),
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
       ),
     );
   }
-  Future getImage() async {
-      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    
-      // setState(() {
-      //   _image = image;
-      // });
-  }
+
   Widget menu() {
     return Container(
-      color:Color.fromARGB(153, 194, 255, 154),
-      child:const TabBar(
-        labelColor:Color.fromRGBO(0, 100, 0, 1.0),
+      color: Color.fromARGB(153, 194, 255, 154),
+      child: const TabBar(
+        labelColor: Color.fromRGBO(0, 100, 0, 1.0),
         unselectedLabelColor: Color.fromARGB(249, 90, 90, 90),
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorPadding: EdgeInsets.all(5.0),
-        indicatorColor:Color.fromRGBO(0, 100, 0, 1.0),
+        indicatorColor: Color.fromRGBO(0, 100, 0, 1.0),
         tabs: [
           Tab(
             text: "Scan",
             icon: Icon(Icons.camera_alt),
           ),
           Tab(
-            text: "Profile",
-            icon: Icon(Icons.person),
-          ),
-          Tab(
             text: "About Us",
-            icon: Icon(Icons.question_mark_outlined),
+            icon: Icon(Icons.question_mark_rounded),
           ),
         ],
       ),

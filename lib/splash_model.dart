@@ -14,7 +14,8 @@ class SplashModel extends FlutterFlowModel<SplashWidget> {
   final unfocusNode = FocusNode();
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+  }
 
   @override
   void dispose() {

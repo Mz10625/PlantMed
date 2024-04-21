@@ -1,4 +1,4 @@
-import 'package:plantmed/sign_in_widget.dart';
+
 import 'package:plantmed/onboarding_slideshow_widget.dart';
 
 // import '/flutter_flow/flutter_flow_theme.dart';
@@ -127,44 +127,44 @@ class _SplashWidgetState extends State<SplashWidget> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        // logFirebaseEvent('SPLASH_PAGE_Column_9mc7ub12_ON_TAP');
-                        // logFirebaseEvent('Column_navigate_to');
+                    // InkWell(
+                    //   splashColor: Colors.transparent,
+                    //   focusColor: Colors.transparent,
+                    //   hoverColor: Colors.transparent,
+                    //   highlightColor: Colors.transparent,
+                    //   onTap: () async {
+                    //     // logFirebaseEvent('SPLASH_PAGE_Column_9mc7ub12_ON_TAP');
+                    //     // logFirebaseEvent('Column_navigate_to');
+                    //
+                    //     // context.pushNamed('SignIn');
+                    //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SignInWidget()));
+                    //   },
+                      // child: Column(
+                      //   mainAxisSize: MainAxisSize.max,
+                      //   children: [
+                      //     Padding(
+                      //       padding:
+                      //           EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                      //       child: RichText(
+                      //         textScaler: MediaQuery.of(context).textScaler,
+                      //         text: const TextSpan(
+                      //           children: [
+                      //             TextSpan(
+                      //               text: 'Already a member?  ',
+                      //               style:TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
+                      //             ),
+                      //             TextSpan(
+                      //               text: 'Sign In',
+                      //               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.green),
+                      //             )
+                      //           ],
+                      //           style: TextStyle(fontSize: 15),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
 
-                        // context.pushNamed('SignIn');
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SignInWidget()));
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                            child: RichText(
-                              textScaler: MediaQuery.of(context).textScaler,
-                              text: const TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Already a member?  ',
-                                    style:TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87),
-                                  ),
-                                  TextSpan(
-                                    text: 'Sign In',
-                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.green),
-                                  )
-                                ],
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),

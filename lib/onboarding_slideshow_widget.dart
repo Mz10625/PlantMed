@@ -1,4 +1,6 @@
-import 'package:plantmed/sign_in_widget.dart';
+
+
+import 'package:plantmed/dashboard_widget.dart';
 
 import '/components/custom_appbar_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -484,7 +486,7 @@ class _OnboardingSlideshowWidgetState extends State<OnboardingSlideshowWidget> w
                           //   HapticFeedback.lightImpact();
                           //   logFirebaseEvent('Button_navigate_to');
 
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInWidget()));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DashboardWidget()));
                           } else {
                           //   logFirebaseEvent('Button_haptic_feedback');
                           //   HapticFeedback.lightImpact();
