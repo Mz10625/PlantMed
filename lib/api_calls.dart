@@ -1,6 +1,14 @@
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+
+Future<bool> isConnected() async {
+  final List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult.contains(ConnectivityResult.mobile) || connectivityResult.contains(ConnectivityResult.wifi) || connectivityResult.contains(ConnectivityResult.ethernet)) {
+    return true;
+  }
+  return false;
+}
 
 Future<String> get_image_class(File imageFile) async {
   var request = http.MultipartRequest('POST', Uri.parse('https://mini-project-3-flask-api.onrender.com/predict'));

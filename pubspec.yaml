@@ -40,8 +40,10 @@ dependencies:
   cloud_firestore: 4.15.7
   cloud_firestore_platform_interface: 6.1.8
   cloud_firestore_web: 3.10.7
+  connectivity_plus: ^6.0.2
   collection: 1.18.0
   easy_debounce: 2.0.1
+  getwidget: ^4.0.0
   emoji_flag_converter: 1.1.0
   firebase_analytics: 10.8.8
   firebase_analytics_platform_interface: 3.9.8
@@ -123,12 +125,7 @@ flutter_launcher_icons:
 # The following section is specific to Flutter packages.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets\images\splash_img.webp
     - assets\images\gallery.jpg
@@ -140,7 +137,8 @@ flutter:
     - assets\images\sliding4.webp
     - assets\images\profile-icon.png
     - assets\images\about-us.svg
-  #   - images/a_dot_ham.jpeg
+    - assets/plant_images/
+    - assets/json_files/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

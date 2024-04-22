@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:plantmed/onboarding_splash_widget.dart';
 import 'package:plantmed/splash_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+int? initScreen;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = await prefs.getInt("initScreen");
+  await prefs.setInt("initScreen", 1);
+  print('initScreen ${initScreen}');
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // theme : ThemeData(fontFamily: 'Arimo'),
-
       debugShowCheckedModeBanner: false,
-      home: const SplashWidget(),
+      initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
+      routes: {
+        '/': (context) => SplashWidget(),
+        "first": (context) => OnboardingSplashWidget(),
+      },
     );
   }
 }

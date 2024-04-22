@@ -330,7 +330,7 @@ class _OnboardingSlideshowWidgetState extends State<OnboardingSlideshowWidget> w
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 0, 0, 32),
                                             child: Text(
-                                              'Scan Plant Leaves Through Your Mobile',
+                                              'Capture Plant Leaves Through Your Mobile',
                                               textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -358,7 +358,7 @@ class _OnboardingSlideshowWidgetState extends State<OnboardingSlideshowWidget> w
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 48, 0, 0),
                                             child: Text(
-                                              'Convenient  for user to know about unknown plants by scanning the leaf.',
+                                              'Convenient for user to know about unknown plants by scanning the leaf.',
                                               textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -410,7 +410,7 @@ class _OnboardingSlideshowWidgetState extends State<OnboardingSlideshowWidget> w
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 48, 0, 0),
                                             child: Text(
-                                              'Gives complete information of plant with its locotion ',
+                                              'Gives medicianl uses of a plant with its locotion',
                                               textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)
