@@ -32,41 +32,41 @@ class _DashboardWidgetState extends State<DashboardWidget> {
     "Amruthaballi",
     "Arali",
     "Arive-Dantu",
-    "Artocarpus Heterophyllus (Jackfruit)",
+    "Artocarpus Heterophyllus -Jackfruit-",
     "ashoka",
-    "Azadirachta Indica (Neem)",
-    "Basella Alba (Basale)",
+    "Azadirachta Indica -Neem-",
+    "Basella Alba -Basale-",
     "Beans",
     "Betel",
     "Bhrami",
-    "Carissa Carandas (Karanda)",
+    "Carissa Carandas -Karanda-",
     "Castor",
     "Chakte",
-    "Citron lime (herelikai)",
-    "Citrus Limon (Lemon)",
+    "Citron lime -herelikai-",
+    "Citrus Limon -Lemon-",
     "Coriender",
     "Crown flower",
     "Ekka",
     "Eucalyptus",
-    "Ficus Religiosa (Peepal Tree)",
-    "Ficus Auriculata (Roxburgh fig)",
+    "Ficus Religiosa -Peepal Tree-",
+    "Ficus Auriculata -Roxburgh fig-",
     "Hibiscus",
     "Indian Sarsaparilla",
     "Indian pennywort",
     "Indian Thornapple",
     "Insulin",
     "Ivy-Gourd",
-    "Jasminum (Jasmine)",
+    "Jasminum -Jasmine-",
     "Kambajala",
-    "Mangifera Indica (Mango)",
-    "Mentha (Mint)",
-    "Moringa Oleifera (Drumstick)",
-    "Muntingia Calabura (Jamaica Cherry-Gasagase)",
-    "Murraya Koenigii (Curry)",
+    "Mangifera Indica -Mango-",
+    "Mentha -Mint-",
+    "Moringa Oleifera -Drumstick-",
+    "Muntingia Calabura -Jamaica Cherry-Gasagase-",
+    "Murraya Koenigii -Curry-",
     "Betel",
-    "Pongamia Pinnata (Indian Beech)",
-    "Psidium Guajava (Guava)",
-    "Santalum Album (Sandalwood)",
+    "Pongamia Pinnata -Indian Beech-",
+    "Psidium Guajava -Guava-",
+    "Santalum Album -Sandalwood-",
     "Tamarind",
     "Tulsi",
   ];
@@ -275,10 +275,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                     object_name = await get_image_class(_imageFile);
                                                     context.loaderOverlay.hide();
                                                     // print("Object name from camera = ${object_name}");
-                                                      if(object_name != "null" && object_name != "-1"){
+                                                      if(object_name != "null" && object_name != "502"){
                                                         Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),));
                                                       }
-                                                      else{
+                                                      else if(object_name != "502"){
                                                         showDialog(
                                                         context: context,
                                                         builder: (BuildContext context) {
@@ -295,6 +295,25 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                             ],
                                                           );
                                                          },
+                                                        );
+                                                      }
+                                                      else{
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) {
+                                                            return AlertDialog(
+                                                              title: Text("Connection failed"),
+                                                              content: Text("Unable to reach the Server."),
+                                                              actions: [
+                                                                TextButton(
+                                                                  child: Text("OK"),
+                                                                  onPressed: () {
+                                                                    Navigator.of(context).pop();
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
                                                         );
                                                       }
                                                      }

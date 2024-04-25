@@ -24,6 +24,6 @@ Future<String> get_image_class(File imageFile) async {
     return response.body;
   } else {
     print('Failed to upload image. Status code: ${response.statusCode}');
+    return "502";
   }
-  return "-1";
 }

@@ -98,10 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     object_name =await get_image_class(File(_imagePath)),
                     print("Object name = ${object_name}"),
                     context.loaderOverlay.hide(),
-                    if(object_name != "null" && object_name != "-1"){
+                    if(object_name != "null" && object_name != "502"){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),)),
                     }
-                    else{
+                    else if(object_name != "502"){
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -114,6 +114,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    }
+                    else{
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Connection failed"),
+                            content: Text("Unable to reach the Server."),
+                            actions: [
+                              TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                              Navigator.of(context).pop();
+                              },
                               ),
                             ],
                           );
