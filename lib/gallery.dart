@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text("Missing Image"),
-                        content: Text("Please Select an Image from Galery"),
+                        content: Text("Please Select an Image from Gallery"),
                         actions: [
                           TextButton(
                             child: Text("OK"),
