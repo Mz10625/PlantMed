@@ -101,6 +101,11 @@ dependencies:
   url_launcher_ios: 6.2.5
   url_launcher_platform_interface: 2.3.2
 #  flutter_native_splash: ^2.4.0
+  ultralytics_yolo:
+    path: ../
+  path: ^1.8.2
+  # path_provider: ^2.0.11
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:
@@ -108,6 +113,7 @@ dev_dependencies:
 #icon
   flutter_launcher_icons: "^0.13.1"
   flutter_lints: ^2.0.0
+  
 flutter_launcher_icons:
     android: "launcher_icon"
     ios: true
@@ -120,6 +126,7 @@ flutter:
     - assets/plant_images/
     - assets/json_files/
     - assets/images/
+    - assets/
 
 # flutter_native_splash-development.yaml
 #flutter_native_splash:

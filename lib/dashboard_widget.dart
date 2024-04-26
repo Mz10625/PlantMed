@@ -15,6 +15,7 @@ import 'package:getwidget/getwidget.dart';
 import 'dashboard_model.dart';
 import 'gallery.dart';
 export 'dashboard_model.dart';
+import 'real_time.dart';
 
 class DashboardWidget extends StatefulWidget {
 
@@ -33,7 +34,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
     "Arali",
     "Arive-Dantu",
     "Artocarpus Heterophyllus -Jackfruit-",
-    "ashoka",
+    "Ashoka",
     "Azadirachta Indica -Neem-",
     "Basella Alba -Basale-",
     "Beans",
@@ -45,30 +46,34 @@ class _DashboardWidgetState extends State<DashboardWidget> {
     "Citron lime -herelikai-",
     "Citrus Limon -Lemon-",
     "Coriender",
-    "Crown flower",
+    "Country-Mallow",
+    "Crown-flower",
     "Ekka",
     "Eucalyptus",
+    "Fenugreek",
     "Ficus Religiosa -Peepal Tree-",
-    "Ficus Auriculata -Roxburgh fig-",
+    "Ficus-Auriculata-Roxburgh-fig-",
     "Hibiscus",
     "Indian Sarsaparilla",
     "Indian pennywort",
-    "Indian Thornapple",
+    "Indian-Thornapple",
     "Insulin",
     "Ivy-Gourd",
     "Jasminum -Jasmine-",
     "Kambajala",
-    "Mangifera Indica -Mango-",
-    "Mentha -Mint-",
+    "Mangifera-Indica-Mango-",
+    "Mentha-Mint-",
     "Moringa Oleifera -Drumstick-",
-    "Muntingia Calabura -Jamaica Cherry-Gasagase-",
-    "Murraya Koenigii -Curry-",
-    "Betel",
-    "Pongamia Pinnata -Indian Beech-",
+    "Muntingia-Calabura-Jamaica-Cherry-Gasagase-",
+    "Murraya-Koenigii-Curry-",
+    "Nerium Oleander -Oleander-",
+    "Pongamia-Pinnata-Indian-Beech-",
     "Psidium Guajava -Guava-",
-    "Santalum Album -Sandalwood-",
+    "Rose",
+    "Santalum-Album-Sandalwood-",
     "Tamarind",
     "Tulsi",
+    "Turmeric",
   ];
 //Camera code
   Future<int> _pickImageFromCamera() async {
@@ -269,74 +274,75 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                             height: 100,
                                             child: GestureDetector(
                                               onTap: () async {
-                                                if(await _pickImageFromCamera() != -1){
-                                                  if(await isConnected()){
-                                                    context.loaderOverlay.show();
-                                                    object_name = await get_image_class(_imageFile);
-                                                    context.loaderOverlay.hide();
-                                                    // print("Object name from camera = ${object_name}");
-                                                      if(object_name != "null" && object_name != "502"){
-                                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),));
-                                                      }
-                                                      else if(object_name != "502"){
-                                                        showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialog(
-                                                            title: Text("Detection Failed"),
-                                                            content: Text("Make sure that you selected a valid Image."),
-                                                            actions: [
-                                                              TextButton(
-                                                                child: Text("OK"),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                         },
-                                                        );
-                                                      }
-                                                      else{
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext context) {
-                                                            return AlertDialog(
-                                                              title: Text("Connection failed"),
-                                                              content: Text("Unable to reach the Server."),
-                                                              actions: [
-                                                                TextButton(
-                                                                  child: Text("OK"),
-                                                                  onPressed: () {
-                                                                    Navigator.of(context).pop();
-                                                                  },
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        );
-                                                      }
-                                                     }
-                                                      else{
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext context) {
-                                                            return AlertDialog(
-                                                              title: Text("Connection Error"),
-                                                              content: Text("Please check your Internet Connection and try again"),
-                                                              actions: [
-                                                                TextButton(
-                                                                  child: Text("OK"),
-                                                                  onPressed: () {
-                                                                      Navigator.of(context).pop();
-                                                                  },
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        );
-                                                       }
-                                                      }
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>RealTime()));
+                                                // if(await _pickImageFromCamera() != -1){
+                                                //   if(await isConnected()){
+                                                //     context.loaderOverlay.show();
+                                                //     object_name = await get_image_class(_imageFile);
+                                                //     context.loaderOverlay.hide();
+                                                //     // print("Object name from camera = ${object_name}");
+                                                //       if(object_name != "null" && object_name != "502"){
+                                                //         Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),));
+                                                //       }
+                                                //       else if(object_name != "502"){
+                                                //         showDialog(
+                                                //         context: context,
+                                                //         builder: (BuildContext context) {
+                                                //           return AlertDialog(
+                                                //             title: Text("Detection Failed"),
+                                                //             content: Text("Make sure that you selected a valid Image."),
+                                                //             actions: [
+                                                //               TextButton(
+                                                //                 child: Text("OK"),
+                                                //                 onPressed: () {
+                                                //                   Navigator.of(context).pop();
+                                                //                 },
+                                                //               ),
+                                                //             ],
+                                                //           );
+                                                //          },
+                                                //         );
+                                                //       }
+                                                //       else{
+                                                //         showDialog(
+                                                //           context: context,
+                                                //           builder: (BuildContext context) {
+                                                //             return AlertDialog(
+                                                //               title: Text("Connection failed"),
+                                                //               content: Text("Unable to reach the Server."),
+                                                //               actions: [
+                                                //                 TextButton(
+                                                //                   child: Text("OK"),
+                                                //                   onPressed: () {
+                                                //                     Navigator.of(context).pop();
+                                                //                   },
+                                                //                 ),
+                                                //               ],
+                                                //             );
+                                                //           },
+                                                //         );
+                                                //       }
+                                                //      }
+                                                //       else{
+                                                //         showDialog(
+                                                //           context: context,
+                                                //           builder: (BuildContext context) {
+                                                //             return AlertDialog(
+                                                //               title: Text("Connection Error"),
+                                                //               content: Text("Please check your Internet Connection and try again"),
+                                                //               actions: [
+                                                //                 TextButton(
+                                                //                   child: Text("OK"),
+                                                //                   onPressed: () {
+                                                //                       Navigator.of(context).pop();
+                                                //                   },
+                                                //                 ),
+                                                //               ],
+                                                //             );
+                                                //           },
+                                                //         );
+                                                //        }
+                                                //       }
                                                   },
                                                 child: Container(
                                                   child: Column(
