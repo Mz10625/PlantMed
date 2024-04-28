@@ -100,7 +100,6 @@ dependencies:
   url_launcher_android: 6.3.0
   url_launcher_ios: 6.2.5
   url_launcher_platform_interface: 2.3.2
-#  flutter_native_splash: ^2.4.0
   ultralytics_yolo:
     path: ../
   path: ^1.8.2

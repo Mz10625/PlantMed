@@ -130,8 +130,8 @@ class _RealTimeState extends State<RealTime> {
     //   format: Format.coreml,
     //   modelPath: modelPath,
     // );
-    final modelPath = await _copy('assets/best_int8.tflite');
-    final metadataPath = await _copy('assets/best_metadata.yaml');
+    final modelPath = await _copy('assets/best_2_int8.tflite');
+    final metadataPath = await _copy('assets/best_2_metadata.yaml');
     final model = LocalYoloModel(
       id: '',
       task: Task.detect,

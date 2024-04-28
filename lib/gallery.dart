@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plantmed/display_plant_data.dart';
+import 'package:plantmed/yolov8s_inference.dart';
 import 'api_calls.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -95,8 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 if(_imagePath != null){
                   if(await isConnected()){
                     context.loaderOverlay.show(),
-                    object_name =await get_image_class(File(_imagePath)),
-                    print("Object name = ${object_name}"),
+                    object_name =await get_class_name(File(_imagePath)),
+                    // print("Object name = ${object_name}"),
                     context.loaderOverlay.hide(),
                     if(object_name != "null" && object_name != "502"){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),)),
