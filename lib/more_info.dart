@@ -228,7 +228,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:plantmed/more_info.dart';
+
+// var tts;
 
 class Plant {
   final String className;
@@ -236,7 +237,6 @@ class Plant {
   final List<String> location;
   final String information;
   final String imageName;
-  final String procedure;
 
   Plant({
     required this.className,
@@ -244,7 +244,6 @@ class Plant {
     required this.location,
     required this.information,
     required this.imageName,
-    required this.procedure,
   });
 
   factory Plant.fromJson(Map<String, dynamic> json) {
@@ -254,7 +253,6 @@ class Plant {
       location: List<String>.from(json['Location']),
       information: json['Information'],
       imageName: json['imageName'],
-      procedure: json['Procedure'],
     );
   }
 }
@@ -265,157 +263,81 @@ Future<Plant> parseJson(String fileName) async {
   return Plant.fromJson(jsonData);
 }
 
-class PlantInfoWidget extends StatefulWidget {
+class PlantInfoWidget extends StatelessWidget {
   final String fileName;
-
   PlantInfoWidget({required this.fileName});
-
-  @override
-  State<PlantInfoWidget> createState() => _PlantInfoWidgetState();
-}
-
-class _PlantInfoWidgetState extends State<PlantInfoWidget> {
-  bool moreInfo = false;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Plant>(
-            future: parseJson(widget.fileName),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text("Error: ${snapshot.error}"));
-              } else if (snapshot.hasData) {
-                final plant = snapshot.data!;
-                
-                return Column(
-                  children: [
-                    Center(
-                      child: Card(
-                        elevation: 4,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width/1.1,
-                          height:MediaQuery.of(context).size.height/1.4,
+      future: parseJson(fileName),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
+        } else if (snapshot.hasData) {
+          final plant = snapshot.data!;
+          // tts = TextToSpeech(text: plant.information);
+          return Column(
+            children: [
+              // Plant information displayed in a Card widget
+              Center(
+                child: Card(
+                  elevation: 4,
+                  // margin: EdgeInsets.all(16),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width/1.1,
+                    height:MediaQuery.of(context).size.height/1.6,
 
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              !moreInfo ? Container(
-                                height: MediaQuery.of(context).size.height/1.8,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 90,
-                                      backgroundColor: Colors.grey,
-                                      child: CircleAvatar(
-                                        radius: 84,
-                                        backgroundImage: AssetImage('assets/plant_images/${plant.imageName}'),
-                                      ),
-                                    ),
-
-                                    SizedBox(height: 20),
-
-                                        RichText(
-                                          text: TextSpan(
-                                            style: TextStyle(color: Colors.black87),
-                                            children: <TextSpan>[
-                                              TextSpan(text: 'Plant Name: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                              TextSpan(text: plant.className),
-                                            ],
-                                          ),
-                                        ),
-                                        // SizedBox(height: 8),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: TextStyle(color: Colors.black87),
-                                            children: <TextSpan>[
-                                              TextSpan(text: 'Scientific Name: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                              TextSpan(text: plant.scientificName),
-                                            ],
-                                          ),
-                                        ),
-                                        // SizedBox(height: 8),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: TextStyle(color: Colors.black87),
-                                            children: <TextSpan>[
-                                              TextSpan(text: 'Location: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                              TextSpan(text: plant.location.toString()),
-                                            ],
-                                          ),
-                                        ),
-                                        // SizedBox(height: 8),
-                                        RichText(
-                                          text: TextSpan(
-                                            style: TextStyle(color: Colors.black87),
-                                            children: <TextSpan>[
-                                              TextSpan(text: 'Medicinal Uses: ', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                              TextSpan(text: plant.information),
-                                            ],
-                                          ),
-                                        ),
-                                  ],
-                                ),
-                              ) : Container(
-                                height:MediaQuery.of(context).size.height/1.8,
-
-                                child: Column(
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        style: TextStyle(color: Colors.black87),
-                                        children: <TextSpan>[
-                                          TextSpan(text: 'Procedure:\n\n', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                          TextSpan(text: plant.procedure),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TextButton(onPressed: ()=>{
-                                      setState(() {
-                                        moreInfo = !moreInfo;
-                                      }),
-                                    },
-                                      child: moreInfo ? Text("Back",) : Text("Show Procedure",),
-                                    ),
-                                    moreInfo ? TextToSpeech(text: plant.procedure) : TextToSpeech(text: plant.information),
-                                  ],
-                                ),
-                              ),
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // Image displayed inside a CircleAvatar
+                        // Inside the PlantInfoWidget build method, replace the CircleAvatar widget with the following code:
+                        CircleAvatar(
+                          radius: 90,
+                          backgroundColor: Colors.grey,
+                          child: CircleAvatar(
+                            radius: 84,
+                            backgroundImage: AssetImage('assets/plant_images/${plant.imageName}'),
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(color: Colors.black87),
+                            children: <TextSpan>[
+                              TextSpan(text: 'Procedure: ', style: const TextStyle(fontWeight: FontWeight.bold)),
+                              TextSpan(text: plant.information),
                             ],
                           ),
                         ),
-                      ),
+                        TextToSpeech(text: plant.information),
+                      ],
                     ),
-                  ],
-                );
-              }
-              return SizedBox(); // Return an empty SizedBox if none of the above conditions are met
-            },
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+        return SizedBox(); // Return an empty SizedBox if none of the above conditions are met
+      },
     );
   }
 }
 
-class RenderPlantData extends StatefulWidget {
+class MoreInfo extends StatefulWidget {
   String ?object_name;
-  RenderPlantData(this.object_name);
+  MoreInfo(this.object_name);
 
   @override
-  State<RenderPlantData> createState() => _RenderPlantDataState();
+  State<MoreInfo> createState() => _MoreInfo();
 }
 
-class _RenderPlantDataState extends State<RenderPlantData> {
+class _MoreInfo extends State<MoreInfo> {
   @override
   Widget build(BuildContext context) {
     return  PopScope(
@@ -428,6 +350,7 @@ class _RenderPlantDataState extends State<RenderPlantData> {
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        // title: 'Plant Information Demo',
         home: Scaffold(
           appBar: AppBar(
             toolbarHeight: 80,
@@ -487,17 +410,17 @@ class TextToSpeechState extends State<TextToSpeech> {
   @override
   Widget build(BuildContext context) {
     return IconButton(onPressed: ()=>{
-        setState(() {
-          stop_voice = !stop_voice;
-        }),
-        if(stop_voice){
-          pause(),
-        }
-        else{
-          speak(widget.text),
-        }
-      },
-          icon: stop_voice==true ? Icon(Icons.volume_up_sharp) : Icon(Icons.volume_off_sharp)
+      setState(() {
+        stop_voice = !stop_voice;
+      }),
+      if(stop_voice){
+        pause(),
+      }
+      else{
+        speak(widget.text),
+      }
+    },
+        icon: stop_voice==true ? Icon(Icons.volume_up_sharp) : Icon(Icons.volume_off_sharp)
     );
   }
 }

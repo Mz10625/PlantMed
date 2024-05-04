@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plantmed/display_plant_data.dart';
 import 'package:plantmed/yolov8s_inference.dart';
-import 'api_calls.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 void main() {
@@ -94,15 +93,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(onPressed: ()async=>{
                 if(_imagePath != null){
-                  if(await isConnected()){
                     context.loaderOverlay.show(),
                     object_name =await get_class_name(File(_imagePath)),
                     // print("Object name = ${object_name}"),
                     context.loaderOverlay.hide(),
-                    if(object_name != "null" && object_name != "502"){
+                    if(object_name != "null"){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),)),
                     }
-                    else if(object_name != "502"){
+                    else{
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -121,45 +119,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         },
                       ),
                     }
-                    else{
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Connection failed"),
-                            content: Text("Unable to reach the Server."),
-                            actions: [
-                              TextButton(
-                              child: Text("OK"),
-                              onPressed: () {
-                              Navigator.of(context).pop();
-                              },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    }
-                  }
-                  else{
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Connection Error"),
-                          content: Text("Please check your Internet Connection and try again"),
-                          actions: [
-                            TextButton(
-                              child: Text("OK"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  }
                 }
                 else{
                   showDialog(

@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:plantmed/api_calls.dart';
 import 'package:plantmed/display_plant_data.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
+// import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:flutter/services.dart';
@@ -235,7 +234,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                 ),
                               ),
                               Container(
-                                height : MediaQuery.of(context).size.height/3,
+                                height : MediaQuery.of(context).size.height/4,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -274,75 +273,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                             child: GestureDetector(
                                               onTap: () async {
                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>RealTime()));
-                                                // if(await _pickImageFromCamera() != -1){
-                                                //   if(await isConnected()){
-                                                //     context.loaderOverlay.show();
-                                                //     object_name = await get_image_class(_imageFile);
-                                                //     context.loaderOverlay.hide();
-                                                //     // print("Object name from camera = ${object_name}");
-                                                //       if(object_name != "null" && object_name != "502"){
-                                                //         Navigator.push(context, MaterialPageRoute(builder: (context)=>RenderPlantData(object_name),));
-                                                //       }
-                                                //       else if(object_name != "502"){
-                                                //         showDialog(
-                                                //         context: context,
-                                                //         builder: (BuildContext context) {
-                                                //           return AlertDialog(
-                                                //             title: Text("Detection Failed"),
-                                                //             content: Text("Make sure that you selected a valid Image."),
-                                                //             actions: [
-                                                //               TextButton(
-                                                //                 child: Text("OK"),
-                                                //                 onPressed: () {
-                                                //                   Navigator.of(context).pop();
-                                                //                 },
-                                                //               ),
-                                                //             ],
-                                                //           );
-                                                //          },
-                                                //         );
-                                                //       }
-                                                //       else{
-                                                //         showDialog(
-                                                //           context: context,
-                                                //           builder: (BuildContext context) {
-                                                //             return AlertDialog(
-                                                //               title: Text("Connection failed"),
-                                                //               content: Text("Unable to reach the Server."),
-                                                //               actions: [
-                                                //                 TextButton(
-                                                //                   child: Text("OK"),
-                                                //                   onPressed: () {
-                                                //                     Navigator.of(context).pop();
-                                                //                   },
-                                                //                 ),
-                                                //               ],
-                                                //             );
-                                                //           },
-                                                //         );
-                                                //       }
-                                                //      }
-                                                //       else{
-                                                //         showDialog(
-                                                //           context: context,
-                                                //           builder: (BuildContext context) {
-                                                //             return AlertDialog(
-                                                //               title: Text("Connection Error"),
-                                                //               content: Text("Please check your Internet Connection and try again"),
-                                                //               actions: [
-                                                //                 TextButton(
-                                                //                   child: Text("OK"),
-                                                //                   onPressed: () {
-                                                //                       Navigator.of(context).pop();
-                                                //                   },
-                                                //                 ),
-                                                //               ],
-                                                //             );
-                                                //           },
-                                                //         );
-                                                //        }
-                                                //       }
-                                                  },
+                                              },
                                                 child: Container(
                                                   child: Column(
                                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -367,6 +298,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                   ],
                                 ),
                               ),
+                              Container(
+                                 margin : EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                 child: Expanded(child: Text("Note: Use Camera Scanning for Better Results",style: TextStyle(fontSize: 16),))
+                              )
                             ],
                           ),
                       ),
@@ -401,7 +336,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                         fontWeight: FontWeight.bold,
                                         ),
                                     ),
-                                    Text('Medicinal plant detection',
+                                    Text('Medicinal Plant Detection',
                                       style: TextStyle(
                                         fontSize: 15,
                                       ),

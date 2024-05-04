@@ -1,7 +1,8 @@
 {
-    "ClassName": "Aloevera",
-    "imageName": "aloevera.jpg",
-    "ScientificName": "Aloe barbadensis miller",
-    "Location": ["Africa", "India", "Other arid areas"],
-    "Information": "Aloe vera is a medicinal plant with antioxidant and antibacterial properties. Aloe vera benefits can include reducing dental plaque, accelerating wound healing, preventing wrinkles, and managing blood sugar. Aloe vera, or Aloe barbadensis, is a thick, short-stemmed plant that stores water in its leaves."
-  }
+  "ClassName": "Aloevera",
+  "imageName": "aloevera.jpg",
+  "ScientificName": "Aloe barbadensis miller",
+  "Location": ["Africa", "India", "Other arid areas"],
+  "Information": "Aloevera is a medicinal plant with antioxidant and antibacterial properties. Aloe vera benefits can include reducing dental plaque, accelerating wound healing, preventing wrinkles, and managing blood sugar. Aloe vera, or Aloe barbadensis, is a thick, short-stemmed plant that stores water in its leaves."
+
+}

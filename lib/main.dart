@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme : ThemeData(fontFamily: 'Arimo'),
       debugShowCheckedModeBanner: false,
       initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
       routes: {
