@@ -363,18 +363,20 @@ class _PlantInfoWidgetState extends State<PlantInfoWidget> {
                               ) : Container(
                                 height:MediaQuery.of(context).size.height/1.8,
 
-                                child: Column(
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        style: TextStyle(color: Colors.black87),
-                                        children: <TextSpan>[
-                                          TextSpan(text: 'Procedure:\n\n', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                          TextSpan(text: plant.procedure),
-                                        ],
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          style: TextStyle(color: Colors.black87),
+                                          children: <TextSpan>[
+                                            TextSpan(text: 'Procedure:\n\n', style: const TextStyle(fontWeight: FontWeight.bold)),
+                                            TextSpan(text: plant.procedure),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               Container(
@@ -384,6 +386,7 @@ class _PlantInfoWidgetState extends State<PlantInfoWidget> {
                                   children: [
                                     TextButton(onPressed: ()=>{
                                       setState(() {
+                                        TextToSpeechState.flutterTts.stop();
                                         moreInfo = !moreInfo;
                                       }),
                                     },
@@ -421,7 +424,7 @@ class _RenderPlantDataState extends State<RenderPlantData> {
     return  PopScope(
       canPop: true,
       onPopInvoked: (didPop) {
-        print("Popped .....");
+        // print("Popped .....");
         setState(() {
           TextToSpeechState.flutterTts.stop();
         });
@@ -471,7 +474,7 @@ class TextToSpeechState extends State<TextToSpeech> {
   bool stop_voice = true;
 
   void speak(String text) async {
-    print(await flutterTts.getVoices);
+    // print(await flutterTts.getVoices);
     await flutterTts.setLanguage("eng-x-lvariant-f00");
     await flutterTts.setSpeechRate(0.5);
     await flutterTts.setPitch(1.0);
@@ -480,7 +483,7 @@ class TextToSpeechState extends State<TextToSpeech> {
     flutterTts.speak(text);
   }
   void pause() async {
-    print("Pausing ...");
+    // print("Pausing ...");
     flutterTts.stop();
   }
 
